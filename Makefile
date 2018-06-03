@@ -2,15 +2,15 @@
 NAME = fdf_bin
 SRC = $(wildcard src/*.c)
 OPTIONS = minilibx/
-CFLAGS = -Wall -Wextra -Werror -I include -L src/libft -I minilibx -L minilibx -lmlx -framework OpenGL -framework Appkit
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -I include -L src/libft -I minilibx -L minilibx -lmlx -framework OpenGL -framework Appkit
 OBJ = $(CFILES:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(SRC)
-	cd src/libft && make Makefile
+	cd src/libft && make -f Makefile
 	mv src/libft/libft.a src
-	cd minilibx && make Makefile
+	cd minilibx && make
 	gcc -o $(NAME) $(CFLAGS) $(SRC) src/libft.a
 
 clean:

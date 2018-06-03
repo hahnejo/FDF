@@ -36,13 +36,13 @@ typedef struct	s_info
 }				t_info;
 
 void	read_n_arr	(t_info *info, char *argv);
+void	corrMalloc	(t_info *info);
+void	storeZ		(t_info *info, char *argv);
 void	ft_init		(t_info *info, char **argv);
 void	gapCalc		(t_info *info);
 void	initPt		(t_info *info);
 void	ft_draw		(t_info *info);
 void	ft_vdraw	(t_info *info);
-// void	ft_read		(t_info *info, char *argv);
-
 
 int		deal_key	(int key, t_info *info);
 
