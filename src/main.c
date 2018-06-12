@@ -57,8 +57,8 @@ void	initPt(t_info *info)
 		j = -1;
 		while (++j < info->width)
 		{
-			info->corr[i][j].x = (float)(info->start_x + j * info->gap + info->corr[i][j].z * info->gap / 5);
-			info->corr[i][j].y = (float)(info->start_y + i * info->gap - info->corr[i][j].z * info->gap / 5);
+			info->corr[i][j]->x = (float)(info->start_x + j * info->gap + info->corr[i][j]->z * info->gap / 5);
+			info->corr[i][j]->y = (float)(info->start_y + i * info->gap - info->corr[i][j]->z * info->gap / 5);
 		}
 	}
 	i = -1;
@@ -67,8 +67,8 @@ void	initPt(t_info *info)
 		j = -1;
 		while (++j < info->height)
 		{
-			info->v_corr[i][j].x = info->corr[j][i].x;
-			info->v_corr[i][j].y = info->corr[j][i].y;
+			info->v_corr[i][j]->x = info->corr[j][i]->x;
+			info->v_corr[i][j]->y = info->corr[j][i]->y;
 		}
 	}
 }
@@ -81,6 +81,27 @@ void	masterWindow(t_info *info)
 	ft_vdraw(info);
 	mlx_hook(info->win_ptr, 2, 2, key_info, info);
 	mlx_loop(info->mlx_ptr);
+}
+
+void	cleanup(t_info *info)
+{
+	int i;
+	int j;
+
+	i = -1;
+	while(++i < info->height)
+	{
+		while (++j < info->height)
+		{
+			
+		}
+		free(info->corr[i]);
+	}
+	i = -1;
+	while(++i < info->width)
+		free(info->v_corr[i]);
+	free(info->corr);
+	free(info->v_corr);
 }
 
 int		main(int argc, char **argv)
@@ -98,6 +119,8 @@ int		main(int argc, char **argv)
 		info.mlx_ptr = mlx_init();
 		info.win_ptr = mlx_new_window(info.mlx_ptr, info.win_x, info.win_y, "mlx 42");
 		masterWindow(&info);
+		cleanup(&info);
+		sleep(15);
 	}
 	return (0);
 }

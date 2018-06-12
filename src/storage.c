@@ -15,15 +15,26 @@
 void	corrMalloc(t_info *info)
 {
 	int i;
+	int j;
 
-	info->corr = (t_corr**)ft_memalloc(sizeof(t_corr*) * info->height + 1);
+	info->corr = ft_memalloc(sizeof(t_corr**) * info->height + 1);
 	i = -1;
 	while (++i < info->height)
-		info->corr[i] = (t_corr*)ft_memalloc(sizeof(t_corr) * info->width + 1);
-	info->v_corr = (t_corr**)ft_memalloc(sizeof(t_corr*) * info->width + 1);
+	{
+		j = -1;
+		info->corr[i] = ft_memalloc(sizeof(t_corr*) * (info->width));
+		while (++j < info->height)
+			info->corr[i][j] = ft_memalloc(sizeof(t_corr));
+	}
+	info->v_corr = ft_memalloc(sizeof(t_corr**) * info->width + 1);
 	i = -1;
 	while (++i < info->width)
-		info->v_corr[i] = (t_corr*)ft_memalloc(sizeof(t_corr) * info->height + 1);
+	{
+		j = -1;
+		info->v_corr[i] = ft_memalloc(sizeof(t_corr*) * info->height);
+		while (++j < info->height)
+			info->v_corr[i][j] = ft_memalloc(sizeof(t_corr));
+	}
 	// i = -1;
 	// info->color[i] = (int)ft_memalloc(sizeof(int) * info->height);
 }
@@ -45,7 +56,7 @@ void	storeZ(t_info *info, char *argv)
 		while (++i < info->width)
 		{
 			// printf("i = %d\n", i);
-			info->corr[j][i].z = ft_atoi(zVal[i]);
+			info->corr[j][i]->z = ft_atoi(zVal[i]);
 			free(zVal[i]);
 		}
 		j++;

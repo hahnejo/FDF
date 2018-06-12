@@ -12,9 +12,30 @@
 
 #include "fdf.h"
 
+void	cleanupp(t_info *info)
+{
+	int i;
+
+	i = -1;
+	while(++i < info->height)
+		free(info->corr[i]);
+	i = -1;
+	while(++i < info->width)
+		free(info->v_corr[i]);
+	// printf("Size after: %f", info->v_corr[0]);
+	free(info->corr);
+	free(info->v_corr);
+}
+
 int		key_info(int key, t_info *info)
 {
-	(key == 53) ? exit(0) : 0;
+	if (key == 53)
+	{
+		cleanupp(info);
+		printf("Cleaned up!\n");
+		//sleep(15);
+		exit(0);
+	}
 	(key == 0 || key == 2 || key == 1 || key == 13 || key == 12 || key == 14) ? rotator(key, info) : 0;
 	(key == 125 || key == 126 || key == 123 || key == 124) ? mover(key, info) : 0;
 	mlx_clear_window(info->mlx_ptr, info->win_ptr);

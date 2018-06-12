@@ -11,10 +11,10 @@ void	vertical_plus(t_info *info)
 		j = -1;
 		while (++j < info->height)
 		{
-			info->corr[j][i].y += 5;
-			info->v_corr[i][j].y += 5;
-			info->corr[j][i].z += 5;
-			info->v_corr[i][j].z += 5;
+			info->corr[j][i]->y += 5;
+			info->v_corr[i][j]->y += 5;
+			info->corr[j][i]->z += 5;
+			info->v_corr[i][j]->z += 5;
 		}
 	}
 }
@@ -30,10 +30,10 @@ void	vertical_minus(t_info *info)
 		j = -1;
 		while (++j < info->height)
 		{
-			info->corr[j][i].y -= 5;
-			info->v_corr[i][j].y -= 5;
-			info->corr[j][i].z -= 5;
-			info->v_corr[i][j].z -= 5;
+			info->corr[j][i]->y -= 5;
+			info->v_corr[i][j]->y -= 5;
+			info->corr[j][i]->z -= 5;
+			info->v_corr[i][j]->z -= 5;
 		}
 	}
 }
@@ -49,10 +49,10 @@ void	horizontal_plus(t_info *info)
 		j = -1;
 		while (++j < info->height)
 		{
-			info->corr[j][i].x += 5;
-			info->v_corr[i][j].x += 5;
-			info->corr[j][i].z += 5;
-			info->v_corr[i][j].z += 5;
+			info->corr[j][i]->x += 5;
+			info->v_corr[i][j]->x += 5;
+			info->corr[j][i]->z += 5;
+			info->v_corr[i][j]->z += 5;
 		}
 	}
 }
@@ -68,10 +68,10 @@ void	horizontal_minus(t_info *info)
 		j = -1;
 		while (++j < info->height)
 		{
-			info->corr[j][i].x -= 5;
-			info->v_corr[i][j].x -= 5;
-			info->corr[j][i].z -= 5;
-			info->v_corr[i][j].z -= 5;
+			info->corr[j][i]->x -= 5;
+			info->v_corr[i][j]->x -= 5;
+			info->corr[j][i]->z -= 5;
+			info->v_corr[i][j]->z -= 5;
 		}
 	}
 }
