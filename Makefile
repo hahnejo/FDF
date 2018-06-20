@@ -2,7 +2,7 @@
 NAME = fdf_bin
 SRC = $(wildcard src/*.c)
 OPTIONS = minilibx/
-CFLAGS = -Wall -Wextra -Werror -I include -L src/libft -I minilibx -L minilibx -lmlx -framework OpenGL -framework Appkit
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -I include -L src/libft -I minilibx -L minilibx -lmlx -framework OpenGL -framework Appkit
 OBJ = $(CFILES:.c=.o)
 
 all: $(NAME)

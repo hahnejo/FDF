@@ -12,21 +12,24 @@
 
 #include "fdf.h"
 
-void	corrMalloc(t_info *info)
+void	corr_malloc(t_info *info)
 {
 	int i;
 	int j;
 
-	info->corr = ft_memalloc(sizeof(t_corr**) * info->height + 1);
+	info->corr = ft_memalloc(sizeof(t_corr**) * info->height);
 	i = -1;
 	while (++i < info->height)
 	{
 		j = -1;
 		info->corr[i] = ft_memalloc(sizeof(t_corr*) * (info->width));
-		while (++j < info->height)
+		while (++j < info->width)
+		{
 			info->corr[i][j] = ft_memalloc(sizeof(t_corr));
+			// printf("%p %d\n", info->corr[i][j], j);
+		}
 	}
-	info->v_corr = ft_memalloc(sizeof(t_corr**) * info->width + 1);
+	info->v_corr = ft_memalloc(sizeof(t_corr**) * info->width);
 	i = -1;
 	while (++i < info->width)
 	{
@@ -39,33 +42,35 @@ void	corrMalloc(t_info *info)
 	// info->color[i] = (int)ft_memalloc(sizeof(int) * info->height);
 }
 
-void	storeZ(t_info *info, char *argv)
+void	store_z(t_info *info, char *argv)
 {
 	int fd;
 	int i;
 	int j;
 	char *line;
-	char **zVal;
+	char **z_val;
 
-	j = 0;
+	i = 0;
 	fd = open(argv, O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
 	{
-		i = -1;
-		zVal = ft_strsplit(line, ' ');
-		while (++i < info->width)
+		j = -1;
+		z_val = ft_strsplit(line, ' ');
+		while (++j < info->width - 1)
 		{
-			// printf("i = %d\n", i);
-			info->corr[j][i]->z = ft_atoi(zVal[i]);
-			free(zVal[i]);
+			printf("i = %d, j = %d\n", i, j);
+			// printf("ft_atoi(z_val[%d]) = %d\n", i, ft_atoi(z_val[j]));
+			// printf("%p %p %p\n", info->corr, info->corr[i], info->corr[i][j]);
+			info->corr[i][j]->z = ft_atoi(z_val[j]);
+			free(z_val[j]);
 		}
-		j++;
+		i++;
 		free(line);
 	}
 	close(fd);
 }
 
-void		read_n_arr(t_info *info, char *argv)
+void	read_n_arr(t_info *info, char *argv)
 {
 	int fd;
 	char *line;
@@ -78,7 +83,7 @@ void		read_n_arr(t_info *info, char *argv)
 	fd = open(argv, O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
 	{
-		while (info->height == 0 && line[i] != '\0')
+		while (info->height == 0 && line[i + 1] != '\0')
 		{
 			if (line[i] == ' ' && line[i + 1] != ' ')
 				info->width++;
@@ -90,7 +95,7 @@ void		read_n_arr(t_info *info, char *argv)
 	}
 	close(fd);
 	printf("width and height are %d and %d respectively\n", info->width, info->height);
-	corrMalloc(info);
-	storeZ(info, argv);
-	printf("after malloc and store, width and height are %d %d\n", info->width, info->height);
+	corr_malloc(info);
+	store_z(info, argv);
+	// printf("after malloc and store, width and height are %d %d\n", info->width, info->height);
 }
