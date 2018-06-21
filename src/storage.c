@@ -12,6 +12,19 @@
 
 #include "fdf.h"
 
+static void	free_string(char	**str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
 void	corr_malloc(t_info *info)
 {
 	int i;
@@ -58,14 +71,14 @@ void	store_z(t_info *info, char *argv)
 		z_val = ft_strsplit(line, ' ');
 		while (++j < info->width - 1)
 		{
-			printf("i = %d, j = %d\n", i, j);
+			// printf("i = %d, j = %d\n", i, j);
 			// printf("ft_atoi(z_val[%d]) = %d\n", i, ft_atoi(z_val[j]));
-			// printf("%p %p %p\n", info->corr, info->corr[i], info->corr[i][j]);
+			printf("%p %p %p\n", info->corr, info->corr[i], info->corr[i][j]);
 			info->corr[i][j]->z = ft_atoi(z_val[j]);
-			free(z_val[j]);
 		}
 		i++;
 		free(line);
+		free_string(z_val);
 	}
 	close(fd);
 }
