@@ -24,17 +24,18 @@ void	ft_init(t_info *info, char **argv)
 	info->xAng = 0;
 	info->yAng = 0;
 	info->zAng = 0;
-	info->zweee = 0;
 	info->deltaZ = 1;
 }
 
 void	master_window(t_info *info)
 {
-	mlx_clear_window(info->mlx_ptr, info->win_ptr);
+	mlx_clear_window(info->win.mlx_ptr, info->win.win_ptr);
 	window_message(info);
+	info->color = 0xFFFFFF;
 	render(info);
-	mlx_hook(info->win_ptr, 2, 2, deal_key, info);
-	mlx_loop(info->mlx_ptr);
+	mlx_hook(info->win.win_ptr, 2, 2, deal_key, info);
+	mlx_loop(info->win.mlx_ptr);
+	cleanup(info);
 }
 
 void	cleanup(t_info *info)
@@ -43,7 +44,7 @@ void	cleanup(t_info *info)
 	int j;
 
 	i = -1;
-	while(++i < info->height)
+	while (++i < info->height)
 	{
 		j = -1;
 		while (++j < info->width)
@@ -51,7 +52,7 @@ void	cleanup(t_info *info)
 		free(info->corr[i]);
 	}
 	i = -1;
-	while(++i < info->width)
+	while (++i < info->width)
 	{
 		j = -1;
 		while (++j < info->height)
@@ -66,19 +67,22 @@ int		main(int argc, char **argv)
 {
 	t_info	info;
 
-	if (argc != 4)
-		return (1);
 	if (argc == 4)
 	{
 		ft_init(&info, argv);
 		read_n_arr(&info, argv[1]);
 		gap_calc(&info);
 		init_pt(&info);
-		info.mlx_ptr = mlx_init();
-		info.win_ptr = mlx_new_window(info.mlx_ptr, info.win_x, info.win_y, "mlx 42");
+		info.win.mlx_ptr = mlx_init();
+		info.win.win_ptr = mlx_new_window(info.win.mlx_ptr,
+			info.win_x, info.win_y, "mlx 42");
 		master_window(&info);
 		cleanup(&info);
-		// sleep(15);
+	}
+	else if (argc != 4)
+	{
+		ft_error();
+		return (1);
 	}
 	return (0);
 }

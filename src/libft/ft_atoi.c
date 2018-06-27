@@ -6,27 +6,11 @@
 /*   By: hjo <hjo@student.42.us.org>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/10 21:44:17 by hjo               #+#    #+#             */
-/*   Updated: 2018/03/10 21:44:38 by hjo              ###   ########.fr       */
+/*   Updated: 2018/06/26 17:28:10 by hjo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-// int		ft_atoi(const char *str)
-// {
-// 	int res = 0;
-// 	int sign = 1;
-// 	int i = 0;
-
-// 	if (str[0] == '-')
-// 	{
-// 		sign = -1;
-// 		i++;
-// 	}
-// 	for (; str[i] != '\0'; ++i)
-// 		res = res * 10 + str[i] - '0';
-// 	return (sign * res);
-// }
 
 int		ft_atoi(const char *str)
 {

@@ -1,8 +1,19 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hjo <marvin@42.fr>                         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/06/26 16:40:50 by hjo               #+#    #+#              #
+#    Updated: 2018/06/26 16:40:51 by hjo              ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-NAME = fdf_bin
+NAME = fdf
 SRC = $(wildcard src/*.c)
 OPTIONS = minilibx/
-CFLAGS = -Wall -Wextra -Werror -g -I include -L src/libft -I minilibx -L minilibx -lmlx -framework OpenGL -framework Appkit
+CFLAGS = -Wall -Wextra -Werror -I include -L src/libft -I minilibx -L minilibx -lmlx -framework OpenGL -framework Appkit
 OBJ = $(CFILES:.c=.o)
 
 all: $(NAME)

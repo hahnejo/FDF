@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	plot_line_low(void *mlx_ptr, void *win_ptr, t_corr *start, t_corr *end)
+void	plot_line_low(t_window *win, t_corr *start, t_corr *end, int color)
 {
 	t_corr	dp;
 	float	yi;
@@ -28,7 +28,7 @@ void	plot_line_low(void *mlx_ptr, void *win_ptr, t_corr *start, t_corr *end)
 	p.y = start->y;
 	while (p.x < end->x)
 	{
-		mlx_pixel_put(mlx_ptr, win_ptr, p.x, p.y, 0xFFFFFF);
+		mlx_pixel_put(win->mlx_ptr, win->win_ptr, p.x, p.y, color);
 		if (p.z > 0)
 		{
 			p.y += yi;
@@ -39,7 +39,7 @@ void	plot_line_low(void *mlx_ptr, void *win_ptr, t_corr *start, t_corr *end)
 	}
 }
 
-void	plot_line_high(void *mlx_ptr, void *win_ptr, t_corr *start, t_corr *end)
+void	plot_line_high(t_window *win, t_corr *start, t_corr *end, int color)
 {
 	t_corr	dp;
 	float	xi;
@@ -55,7 +55,7 @@ void	plot_line_high(void *mlx_ptr, void *win_ptr, t_corr *start, t_corr *end)
 	p.y = start->y;
 	while (p.y <= end->y)
 	{
-		mlx_pixel_put(mlx_ptr, win_ptr, p.x, p.y, 0xFFFFFF);
+		mlx_pixel_put(win->mlx_ptr, win->win_ptr, p.x, p.y, color);
 		if (p.z > 0)
 		{
 			p.x += xi;
@@ -66,27 +66,25 @@ void	plot_line_high(void *mlx_ptr, void *win_ptr, t_corr *start, t_corr *end)
 	}
 }
 
-// put win_ptr, mlx_ptr, start pointer, end pointer
-
-void	plot_line(void *mlx_ptr, void *win_ptr, t_corr *start, t_corr *end)
+void	plot_line(t_window *win, t_corr *start, t_corr *end, int color)
 {
 	if (fabsf(end->y - start->y) < fabsf(end->x - start->x))
 	{
 		if (start->x > end->x)
-			plot_line_low(mlx_ptr, win_ptr, end, start);
+			plot_line_low(win, end, start, color);
 		else
-			plot_line_low(mlx_ptr, win_ptr, start, end);
+			plot_line_low(win, start, end, color);
 	}
 	else
 	{
 		if (start->y > end->y)
-			plot_line_high(mlx_ptr, win_ptr, end, start);
+			plot_line_high(win, end, start, color);
 		else
-			plot_line_high(mlx_ptr, win_ptr, start, end);
+			plot_line_high(win, start, end, color);
 	}
 }
 
-void	ft_draw(t_info *info)
+void	ft_draw(t_info *info, int color)
 {
 	int i;
 	int j;
@@ -96,11 +94,12 @@ void	ft_draw(t_info *info)
 	{
 		j = -1;
 		while (++j < info->width - 1)
-			plot_line(info->mlx_ptr, info->win_ptr, info->corr[i][j], info->corr[i][j + 1]);
+			plot_line(&info->win, info->corr[i][j],
+				info->corr[i][j + 1], color);
 	}
 }
 
-void	ft_vdraw(t_info *info)
+void	ft_vdraw(t_info *info, int color)
 {
 	int i;
 	int j;
@@ -110,6 +109,7 @@ void	ft_vdraw(t_info *info)
 	{
 		j = -1;
 		while (++j < info->height - 1)
-			plot_line(info->mlx_ptr, info->win_ptr, info->v_corr[i][j], info->v_corr[i][j + 1]);
+			plot_line(&info->win, info->v_corr[i][j],
+				info->v_corr[i][j + 1], color);
 	}
 }
