@@ -75,7 +75,7 @@ int		main(int argc, char **argv)
 		init_pt(&info);
 		info.win.mlx_ptr = mlx_init();
 		info.win.win_ptr = mlx_new_window(info.win.mlx_ptr,
-			info.win_x, info.win_y, "mlx 42");
+			info.win_x, info.win_y, "Fil de fer");
 		master_window(&info);
 		cleanup(&info);
 	}

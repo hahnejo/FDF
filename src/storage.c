@@ -66,7 +66,7 @@ void		store_z(t_info *info, char *argv)
 	{
 		j = -1;
 		z_val = ft_strsplit(line, ' ');
-		while (++j < info->width - 1)
+		while (++j < info->width)
 			info->corr[i][j]->z = ft_atoi(z_val[j]);
 		i++;
 		free(line);
