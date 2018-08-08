@@ -75,17 +75,17 @@ void		store_z(t_info *info, char *argv)
 	close(fd);
 }
 
-void		read_n_arr(t_info *info, char *argv)
+int			read_n_arr(t_info *info, char *argv)
 {
 	char	*line;
 	int		fd;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	line = NULL;
 	fd = open(argv, O_RDONLY);
+	if (fd < 0)
+		return (0);
 	while (get_next_line(fd, &line) > 0)
 	{
 		while (info->height == 0 && line[i + 1] != '\0')
@@ -101,4 +101,5 @@ void		read_n_arr(t_info *info, char *argv)
 	close(fd);
 	corr_malloc(info);
 	store_z(info, argv);
+	return (1);
 }

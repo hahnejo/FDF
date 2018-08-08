@@ -67,10 +67,15 @@ int		main(int argc, char **argv)
 {
 	t_info	info;
 
-	if (argc == 4)
+	if (argc == 4 && check_for_arg(argv[2]) && ft_atoi(argv[2]) >= 300 &&
+		check_for_arg(argv[3]) && ft_atoi(argv[3]) >= 300)
 	{
 		ft_init(&info, argv);
-		read_n_arr(&info, argv[1]);
+		if (!read_n_arr(&info, argv[1]))
+		{
+			invalid_error();
+			return (1);
+		}
 		gap_calc(&info);
 		init_pt(&info);
 		info.win.mlx_ptr = mlx_init();
@@ -79,7 +84,7 @@ int		main(int argc, char **argv)
 		master_window(&info);
 		cleanup(&info);
 	}
-	else if (argc != 4)
+	else
 	{
 		ft_error();
 		return (1);

@@ -19,10 +19,6 @@ int		key_info(int key, t_info *info)
 	key == 124 ? info->move_x += 2 : 0;
 	key == 125 ? info->move_y += 2 : 0;
 	key == 126 ? info->move_y -= 2 : 0;
-	key == 6 ? info->deltaZ += 0.1 : 1;
-	key == 7 ? info->deltaZ -= 0.1 : 1;
-	key == 2 ? info->xAng += 0.005 : 0;
-	key == 0 ? info->xAng -= 0.005 : 0;
 	key == 13 ? info->yAng += 0.005 : 0;
 	key == 1 ? info->yAng -= 0.005 : 0;
 	key == 12 ? info->zAng += 0.005 : 0;
@@ -46,9 +42,6 @@ int		deal_key(int key, t_info *info)
 	key == 53 ? key_info(key, info) : 0;
 	(key == 123 || key == 124 || key == 125 || key == 126)
 		? key_info(key, info) : 0;
-	(key == 8 || key == 9) ? key_info(key, info) : 0;
-	(key == 6 || key == 7) ? key_info(key, info) : 0;
-	(key == 2 || key == 0) ? key_info(key, info) : 0;
 	(key == 13 || key == 1) ? key_info(key, info) : 0;
 	(key == 12 || key == 14) ? key_info(key, info) : 0;
 	(key == 15 || key == 5 || key == 11 || key == 35)

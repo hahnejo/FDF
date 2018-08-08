@@ -8,6 +8,13 @@
 #include <stdio.h>
 #include <math.h>
 
+typedef struct s_color
+{
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+}				t_color;
+
 typedef struct s_corr
 {
 	float x;
@@ -23,7 +30,18 @@ typedef struct s_corr
 	double y1;
 	double y2;
 	double z0;
+	int		color;
+	int		r;
+	int		g;
+	int		b;
+	int		diff;
 }				t_corr;
+
+typedef struct	s_window
+{
+	void		*mlx_ptr;
+	void		*win_ptr;
+}				t_window;
 
 typedef struct	s_info
 {
@@ -31,8 +49,7 @@ typedef struct	s_info
 	int		width;
 	t_corr		***corr;
 	t_corr		***v_corr;
-	void		*mlx_ptr;
-	void		*win_ptr;
+	t_window win;
 	float		gap;
 	int		start_x;
 	int		start_y;
@@ -47,44 +64,37 @@ typedef struct	s_info
 	int		deltaZ;
 	int		move_x;
 	int		move_y;
-	int		zweee;
-	int		color;
+	int		color;	
 }					t_info;
 
-void	read_n_arr		(t_info *info, char *argv);
+int		read_n_arr		(t_info *info, char *argv);
 void	corr_malloc		(t_info *info);
 void	store_z			(t_info *info, char *argv);
 void	ft_init			(t_info *info, char **argv);
 void	gap_calc		(t_info *info);
 void	init_pt			(t_info *info);
-void	ft_draw			(t_info *info);
-void	ft_vdraw		(t_info *info);
-void	plot_line_ligh	(void *mlx_ptr, void *win_ptr, t_corr *start, t_corr *end);
-void	plot_line_low	(void *mlx_ptr, void *win_ptr, t_corr *start, t_corr *end);
-void	plot_line		(void *mlx_ptr, void *win_ptr, t_corr *start, t_corr *end);
+void	ft_draw			(t_info *info, int color);
+void	ft_vdraw		(t_info *info, int color);
+void	plot_line_ligh	(t_window *win, t_corr *start, t_corr *end, int color);
+void	plot_line_low	(t_window *win, t_corr *start, t_corr *end, int color);
+void	plot_line		(t_window *win, t_corr *start, t_corr *end, int color);
 
-int		deal_key	(int key, t_info *info);
-// void	rotate_x		(t_info *info);
-// void	rotate_y		(t_info *info);
-// void	rotate_z		(t_info *info);
-// void	rotator			(int key, t_info *info);
+int		deal_key		(int key, t_info *info);
 
 void	window_message	(t_info *info);
 int		key_info		(int key, t_info *info);
-void	subrender(t_corr *c, t_info *o, int i, int j);
-void	render(t_info *o);
+void	subrender		(t_corr *c, t_info *o, int i, int j);
+void	render			(t_info *o);
 void	master_window	(t_info *info);
+int		key_color		(int key, t_info *in);
+void	reset_color		(t_corr *o);
+void	init_color		(t_corr *o);
+void	ft_error		(void);
 
-void	mover			(int key, t_info *info);
-void	vertical_plue	(t_info *info);
-void	vertical_minus	(t_info *info);
-void	horizontal_plus	(t_info *info);
-void	horizontal_minus(t_info *info);
-void	smooth(t_info *info, float x0, float y0, float x1, float y1);
-void	cleanup(t_info *info);
-
-
-
-
+void	smooth			(t_info *info, float x0, float y0, float x1, float y1);
+void	cleanup			(t_info *info);
+void	corr_save		(t_info *o);
+int		check_for_arg	(char *arg);
+void	invalid_error	(void);
 
 #endif

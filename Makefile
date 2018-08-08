@@ -18,21 +18,23 @@ OBJ = $(CFILES:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(SRC)
+$(NAME): $(SRC) minilibx/libmlx.a
+	gcc -o $(NAME) $(CFLAGS) $(SRC) src/libft.a
+
+minilibx/libmlx.a:
 	cd src/libft && make -f Makefile
 	mv src/libft/libft.a src
 	cd minilibx && make
-	gcc -o $(NAME) $(CFLAGS) $(SRC) src/libft.a
 
 clean:
-	cd src/libft && make fclean
+	cd src/libft && make clean
+	rm -rf $(NAME)
 
 fclean:
 	cd src/libft && make fclean
 	cd minilibx && make clean
-	rm -rf $(NAME)
 	rm -rf src/libft.a
 
-re: fclean $(NAME)
+re: clean $(NAME)
 
 .PHONY: clean fclean re
